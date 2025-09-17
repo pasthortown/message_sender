@@ -1,0 +1,12 @@
+# Carpetas de datos persistentes
+bin/
+obj/
+
+.env
+# Archivos de configuración del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de log
+*.log
+

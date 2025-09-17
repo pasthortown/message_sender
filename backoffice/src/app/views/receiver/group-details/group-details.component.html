@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-12">
+    <div class="p-4 border rounded shadow-sm bg-white">
+
+      <div class="mb-3">
+        <label for="nombreGrupo" class="form-label">Nombre</label>
+        <input
+          class="form-control"
+          id="nombreGrupo"
+          aria-describedby="nombreGrupo"
+          placeholder="Nombre del Grupo"
+          [(ngModel)]="group.grupo"
+        />
+        <small id="mensajeHelp" class="form-text text-muted">
+          Nombre del Grupo.
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label for="groupMembers" class="form-label">Miembros del Grupo</label>
+
+        <!-- Pasamos el arreglo compatible con <app-users> -->
+        <app-users
+          [users]="usersForChild"
+          [show_details]="false"
+          [can_delete]="true"
+          [title]="'Usuarios en el Grupo'"
+          (deleteSelected)="onDeleteUsers($event)"
+        >
+        </app-users>
+
+        <small id="mensajeHelp" class="form-text text-muted">
+          Usuarios que pertenecen al Grupo.
+        </small>
+      </div>
+
+    </div>
+  </div>
+</div>

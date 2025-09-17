@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package
+    Name="Comunicaciones Grupo KFC"
+    Language="12298"
+    Version="1.0.0.0"
+    Manufacturer="Grupo KFC"
+    UpgradeCode="{7E3F1A8F-5B07-4B43-9F0F-6A2D5B2C8F21}"
+    Scope="perUser"
+    Compressed="yes">
+
+    <!-- Upgrades -->
+    <MajorUpgrade DowngradeErrorMessage="Ya existe una versión más reciente instalada." />
+
+    <!-- Icono incrustado + ARP -->
+    <Icon Id="MainIco" SourceFile="Resources\main.ico" />
+    <Property Id="ARPPRODUCTICON" Value="MainIco" />
+
+    <!-- Directorios: %LocalAppData%\Grupo KFC\Comunicaciones Grupo KFC\Resources -->
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="CompanyDir" Name="Grupo KFC">
+        <Directory Id="INSTALLDIR" Name="Comunicaciones Grupo KFC">
+          <Directory Id="RESDIR" Name="Resources" />
+        </Directory>
+      </Directory>
+    </StandardDirectory>
+
+    <!-- Menú Inicio y Escritorio -->
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="AppProgramMenuDir" Name="Comunicaciones Grupo KFC" />
+    </StandardDirectory>
+    <StandardDirectory Id="DesktopFolder" />
+
+    <!-- Feature principal -->
+    <Feature Id="MainFeature" Title="Aplicación" Level="1">
+      <ComponentRef Id="Cmp_MainExe" />
+      <ComponentRef Id="Cmp_EnvFile" />
+      <ComponentRef Id="Cmp_Res_Ico" />
+      <ComponentRef Id="Cmp_StartMenuShortcut" />
+      <ComponentRef Id="Cmp_AutoRun" />
+      <!-- <ComponentRef Id="Cmp_DesktopShortcut" /> -->
+    </Feature>
+
+    <!-- Archivos publicados (usa -d PublishDir="...\publish" en wix build) -->
+    <Component Id="Cmp_MainExe" Directory="INSTALLDIR" Guid="*">
+      <File Id="Fil_MainExe" Source="$(var.PublishDir)\GrupoKFC_Communications.exe" KeyPath="yes" />
+    </Component>
+
+    <Component Id="Cmp_EnvFile" Directory="INSTALLDIR" Guid="*">
+      <File Id="Fil_DotEnv" Source="$(var.PublishDir)\.env" />
+    </Component>
+
+    <!-- Resources\main.ico (para runtime) -->
+    <Component Id="Cmp_Res_Ico" Directory="RESDIR" Guid="*">
+      <!-- Nota: usamos el icono desde el repo. Si prefieres, cópialo a publish y cambia a Source="$(var.PublishDir)\Resources\main.ico" -->
+      <File Id="Fil_Res_MainIco" Source="Resources\main.ico" KeyPath="yes" />
+    </Component>
+
+    <!-- Acceso directo en Menú Inicio (con icono) -->
+    <Component Id="Cmp_StartMenuShortcut" Directory="AppProgramMenuDir" Guid="*">
+      <Shortcut
+        Id="Shc_StartMenu"
+        Name="Comunicaciones Grupo KFC"
+        Target="[INSTALLDIR]GrupoKFC_Communications.exe"
+        WorkingDirectory="INSTALLDIR"
+        Icon="MainIco" />
+      <RemoveFolder Id="Rmf_StartMenuDir" On="uninstall" />
+      <RegistryValue
+        Root="HKCU"
+        Key="Software\Grupo KFC\Comunicaciones Grupo KFC"
+        Name="installed"
+        Type="integer"
+        Value="1"
+        KeyPath="yes" />
+    </Component>
+
+    <!-- Auto-inicio en login -->
+    <Component Id="Cmp_AutoRun" Directory="INSTALLDIR" Guid="*">
+      <RegistryValue
+        Root="HKCU"
+        Key="Software\Microsoft\Windows\CurrentVersion\Run"
+        Name="Comunicaciones Grupo KFC"
+        Type="string"
+        Value="&quot;[INSTALLDIR]GrupoKFC_Communications.exe&quot;"
+        KeyPath="yes" />
+    </Component>
+
+    <!-- (Opcional) Acceso directo en Escritorio
+    <Component Id="Cmp_DesktopShortcut" Directory="DesktopFolder" Guid="*">
+      <Shortcut
+        Id="Shc_Desktop"
+        Name="Comunicaciones Grupo KFC"
+        Target="[INSTALLDIR]GrupoKFC_Communications.exe"
+        WorkingDirectory="INSTALLDIR"
+        Icon="MainIco" />
+      <RegistryValue Root="HKCU" Key="Software\Grupo KFC\Comunicaciones Grupo KFC"
+                     Name="desktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+    -->
+
+  </Package>
+</Wix>

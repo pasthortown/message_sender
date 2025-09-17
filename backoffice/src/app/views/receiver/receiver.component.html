@@ -1,0 +1,90 @@
+<div class="container">
+  <!-- Título -->
+  <div class="row">
+    <h1 class="col-12 mb-4">
+      Administración de Grupos
+    </h1>
+    <small class="col-12 mb-4">Permite la gestión de los grupos que recibiran los mensajes que se remitan con la plataforma de Comunicación de Grupo KFC</small>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-6">
+      <!-- Modo típico: agregar usuarios seleccionados a un grupo -->
+      <app-users
+        [show_details]="true"
+        [users]="users"
+        [can_delete]="false"
+        (showDetails)="showUserDetail($event)"
+        (addSelectedToGroup)="addUsersToGroup($event)">
+      </app-users>
+    </div>
+
+    <div class="col-6">
+      <app-groups
+        [show_details]="true"
+        [groups]="groups"
+        (showDetails)="showGroupDetail($event)"
+        (deleteGroups)="deleteSelectedGroups($event)">
+      </app-groups>
+    </div>
+  </div>
+
+</div>
+
+<c-modal #modalXl id="modal" size="lg" [visible]="visibleUserDetails" (visibleChange)="handleChangeVisibleUserDetails($event)">
+  <c-modal-header>
+    <h3>Datos del Usuario</h3>
+    <button cButtonClose (click)="cancelarUserDetails()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-user-details [user]="user_selected" (deleteGroups)="deleteUsersGroup($event)"></app-user-details>
+  </c-modal-body>
+</c-modal>
+
+<c-modal #modalXl id="modal" size="lg" [visible]="visibleGroupDetails" (visibleChange)="handleChangeVisibleGroupDetails($event)">
+  <c-modal-header>
+    <h3>Datos del Grupo</h3>
+    <button cButtonClose (click)="cancelarGroupDetails()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    <app-group-details [group]="group_selected" (deleteUsers)="deleteGroupsUser($event)"></app-group-details>
+  </c-modal-body>
+</c-modal>
+
+<c-modal #modalXl id="modal" size="lg" [visible]="visibleAddUsersToGroup" (visibleChange)="handleChangeVisibleAddUsersToGroup($event)">
+  <c-modal-header>
+    <h3>Agregar Usuarios a Grupo</h3>
+    <button cButtonClose (click)="cancelarAddUsersToGroup()"></button>
+  </c-modal-header>
+  <c-modal-body>
+    <div class="mb-3">
+      <label for="newGroupName" class="form-label">Agregar a un Grupo Nuevo</label>
+      <input
+        type="text"
+        class="form-control"
+        id="newGroupName"
+        placeholder="Nombre del Nuevo Grupo"
+        [(ngModel)]="newGroupName" />
+      <small class="form-text text-muted">Nuevo Grupo a Crear.</small>
+    </div>
+    <div class="mb-3">
+      <label for="existingGroup" class="form-label">Agregar a un Grupo Existente</label>
+      <app-groups (goupsSelected)="groupsToAddReport($event)" [groups]="groups" [can_delete]="false" [title]="'Grupos'"></app-groups>
+    </div>
+    <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+      <div class="btn-group" role="group" aria-label="Toolbar de acciones">
+        <button
+          type="button"
+          class="btn btn-dark" (click)="addUsersToGroups()">
+          <i class="fas fa-save"></i> Guardar
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger" (click)="cancelarAddUsersToGroup()">
+          <i class="fas fa-times"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  </c-modal-body>
+</c-modal>

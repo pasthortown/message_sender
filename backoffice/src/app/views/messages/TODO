@@ -1,0 +1,26 @@
+Mensajes:
+
+Tipo {Texto/Imagen}
+Definir el lugar donde se muestra
+
+Contenido:
+Texto:
+  Titulo
+  Texto
+
+Imagen:
+  Seleccionar/arrastrar imagen
+
+-----------------------
+Toolbr que permite hacer acciones
+-----------------------
+Cuerpo donde se editan los atributos del mensaje por su tipo
+
+        -----
+        0 1 2
+        3 4 5
+        6 7 8
+        -----
+------------------------
+Footer
+------------------------

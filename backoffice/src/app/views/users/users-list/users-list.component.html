@@ -1,0 +1,20 @@
+<div class="p-4 border rounded shadow-sm bg-white panel-usuarios d-flex flex-column">
+  <h3 class="mb-3">Lista Usuarios</h3>
+
+  <div class="table-wrapper flex-grow-1 overflow-auto">
+    <table class="table custom-table w-100 text-center m-0">
+      <thead>
+        <tr>
+          <th class="custom-header sticky-header">Cuenta de Usuario</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users; track user.id; let i = $index) {
+          <tr class="custom-row">
+            <td class="custom-cell" (click)="selectUser(user)">{{user.username}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

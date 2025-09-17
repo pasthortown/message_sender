@@ -1,0 +1,22 @@
+<div class="container">
+  <!-- Título -->
+  <div class="row">
+    <h1 class="col-12 mb-4">
+      Administración de Usuarios
+    </h1>
+    <small class="col-12 mb-4">Permite la gestión de cuentas de usuarios que administran la plataforma de Comunicación de Grupo KFC</small>
+  </div>
+
+  <!-- Paneles: Nuevo Usuario y Lista de Usuarios -->
+  <div class="row">
+    <!-- Panel Izquierdo: Nuevo Usuario -->
+    <div class="col-12 col-md-6 mb-4 mb-md-0">
+      <app-user-dialog [user]="user_selected" (cancel)="cancelButton($event)" (save)="saveButton($event)"></app-user-dialog>
+    </div>
+
+    <!-- Panel Derecho: Lista de Usuarios -->
+    <div class="col-12 col-md-6">
+      <app-users-list [users]="users" (userSelected)="selectedUser($event)"></app-users-list>
+    </div>
+  </div>
+</div>

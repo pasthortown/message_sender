@@ -1,0 +1,66 @@
+<h3 class="mb-4">Programar Envío de Mensaje</h3>
+
+<!-- Mensaje -->
+<div class="mb-3">
+  <label for="mensajeSelect" class="form-label">Mensaje</label>
+  <select class="form-select" id="mensajeSelect" aria-describedby="mensajeHelp"
+          [(ngModel)]="messageKey">
+    <option [ngValue]="null" disabled selected>Seleccione un mensaje</option>
+    @for (message of messages; track message.item_id) {
+      <option [ngValue]="message.item_id">{{ message.description }}</option>
+    }
+  </select>
+  <small id="mensajeHelp" class="form-text text-muted">
+    Elija el contenido que desea enviar.
+  </small>
+</div>
+
+<!-- Grupos (ng-select múltiple) -->
+<div class="mb-3">
+  <label for="grupoSelectNg" class="form-label">Grupo de Destinatarios</label>
+
+  <ng-select
+    [multiple]="true"
+    [searchable]="true"
+    [closeOnSelect]="false"
+    [clearable]="true"
+    placeholder="Seleccione uno o más grupos"
+    class="w-100"
+    [(ngModel)]="groups">
+    @for (g of groupsOptions; track g.item_id) {
+      <ng-option [value]="g.group">{{ g.group }}</ng-option>
+    }
+  </ng-select>
+
+  <small id="grupoHelp" class="form-text text-muted">
+    Busque y seleccione uno o varios grupos. Puede desmarcar desde el listado.
+  </small>
+</div>
+
+<!-- Fecha y Hora -->
+<div class="mb-4">
+  <div class="row">
+    <label class="form-label">Fecha y Hora de Envío</label>
+  </div>
+
+  <div class="d-flex align-items-center gap-3 flex-wrap">
+    <ngb-datepicker [(ngModel)]="dateModel" [outsideDays]="'hidden'"></ngb-datepicker>
+    <ngb-timepicker [(ngModel)]="timeModel" [spinners]="true" [meridian]="false"></ngb-timepicker>
+  </div>
+
+  <small class="form-text text-muted">
+    Defina cuándo debe enviarse el mensaje.
+  </small>
+</div>
+
+<!-- Botones -->
+<div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+  <div class="btn-group" role="group" aria-label="Acciones de agenda">
+    <button type="button" class="btn btn-dark" (click)="emitEvent()">
+      <i class="fas fa-calendar-check"></i> Agendar
+    </button>
+    <button type="button" class="btn btn-outline-danger" (click)="reset()">
+      <i class="fas fa-times"></i> Cancelar
+    </button>
+  </div>
+</div>

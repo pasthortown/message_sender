@@ -1,0 +1,32 @@
+.custom-table {
+  border: 3px solid gray;
+  border-radius: 20px;
+  padding: 10px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+}
+
+.custom-cell {
+  border: 1px solid lightgray;
+  font-size: 40px;
+  color: gray;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.custom-cell.hovered {
+  background-color: gray;
+  color: white;
+}
+
+.custom-cell.selected {
+  background-color: #4b4b4b; // gris más intenso
+  color: white;
+}

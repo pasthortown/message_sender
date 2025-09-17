@@ -1,0 +1,75 @@
+<div class="p-4 border rounded shadow-sm bg-white panel-usuarios d-flex flex-column">
+  <h4 class="mb-3">{{title}}</h4>
+
+  <!-- Toolbar -->
+  <div class="d-flex align-items-center gap-2 mb-3 toolbar">
+    @if(can_delete) {
+      <button
+        type="button"
+        class="btn btn-danger d-flex align-items-center"
+        aria-label="Eliminar grupos seleccionados"
+        title="Eliminar grupos seleccionados"
+        (click)="deleteGroupsSelected()">
+        <i class="fa-solid fa-trash me-1"></i>
+      </button>
+    }
+
+
+    <!-- Buscador -->
+    <div class="input-group ms-2 toolbar-search">
+      <input
+        #q
+        type="text"
+        class="form-control"
+        placeholder="Buscar..."
+        aria-label="Buscar"
+        (input)="filterGroups(q.value)" />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        aria-label="Buscar"
+        (click)="filterGroups(q.value)">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla (scroll solo aquí) -->
+  <div class="table-wrapper flex-grow-1 overflow-auto">
+    <table class="table custom-table w-100 m-0 align-middle">
+      <tbody>
+        @for (group of groups_visible; track group.grupo) {
+          <tr class="custom-row" [class.selected-row]="group.select">
+            <!-- checkbox -->
+            <td class="check-cell">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="group.select"
+                (change)="onToggleSelect(group)" />
+            </td>
+
+            <!-- ojo -->
+            @if(show_details) {
+              <td class="icon-cell">
+                <a
+                  role="button"
+                  class="eye-link text-decoration-none"
+                  title="Ver Detalles"
+                  aria-label="Ver Detalles"
+                  (click)="inspectGroup(group)">
+                  <i class="fa-regular fa-eye"></i>
+                </a>
+              </td>
+            }
+
+            <!-- name -->
+            <td class="custom-cell">
+              <span class="group-name">{{ group.grupo }}</span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

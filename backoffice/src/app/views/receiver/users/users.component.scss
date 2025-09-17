@@ -1,0 +1,44 @@
+/* buscador en la toolbar */
+.toolbar .toolbar-search {
+  min-width: 220px;
+  flex: 1; /* usa el espacio libre */
+}
+
+/* solo la tabla scrollea, altura máxima 50vh */
+.table-wrapper {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+/* celdas angostas para checkbox y ojo */
+.icon-cell,
+.check-cell {
+  width: 42px;
+  text-align: center;
+}
+
+/* colores del ícono de ver detalle */
+.eye-link,
+.eye-link:visited,
+.eye-link:active {
+  color: var(--bs-dark) !important;
+}
+.eye-link:hover {
+  color: var(--bs-primary) !important;
+}
+
+/* panel y tabla */
+.panel-usuarios { min-height: 420px; }
+.table.custom-table :where(td, th) { border: 0; }
+.custom-row { border-bottom: 1px solid #f1f3f5; transition: background-color 0.2s ease; }
+.custom-row:last-child { border-bottom: 0; }
+.custom-row:hover { background-color: #f6f7f9; }
+
+/* texto del email */
+.user-email { color: #000; font-weight: 400; }
+.user--sin-grupo { font-weight: 700; color:#cf0606 }
+
+/* estado seleccionado */
+.selected-row { background-color: #e9f5ff; color: #000; }
+/* << hace el email en negrita cuando está seleccionado >> */
+.selected-row .user-email { font-weight: 700; }

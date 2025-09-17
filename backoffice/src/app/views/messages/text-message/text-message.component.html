@@ -1,0 +1,26 @@
+<!-- Título -->
+<div class="mb-3">
+  <label for="tituloInput" class="form-label">Título</label>
+  <input type="text"
+         class="form-control"
+         id="tituloInput"
+         maxlength="100"
+         placeholder="Ingrese el título del mensaje"
+         [(ngModel)]="textoModel.title"
+         (input)="emitirCambio()">
+  <small class="form-text text-muted">Establece el título del mensaje de texto a enviar.</small>
+</div>
+
+<!-- Contenido -->
+<div class="mb-3">
+  <label for="contenidoTextarea" class="form-label">Contenido</label>
+  <textarea class="form-control"
+            id="contenidoTextarea"
+            rows="3"
+            maxlength="150"
+            placeholder="Ingrese el contenido del mensaje"
+            [(ngModel)]="textoModel.text"
+            (input)="emitirCambio()">
+  </textarea>
+  <small class="form-text text-muted">Establece el contenido del mensaje de texto a enviar.</small>
+</div>

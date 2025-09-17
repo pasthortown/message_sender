@@ -1,0 +1,85 @@
+<div class="p-4 border rounded shadow-sm bg-white panel-usuarios">
+  <h3 class="mb-4">Nuevo Usuario</h3>
+
+  <!-- Correo Electrónico -->
+  <div class="mb-3">
+    <label for="emailInput" class="form-label">Correo Electrónico</label>
+    <input
+      type="email"
+      class="form-control"
+      id="emailInput"
+      placeholder="usuario@ejemplo.com"
+      [(ngModel)]="user.username"
+      name="username"
+    />
+    <small class="form-text text-muted">
+      Ingrese la dirección de correo electrónico del usuario.
+    </small>
+  </div>
+
+  <!-- Contraseña -->
+  <div class="mb-3">
+    <label for="passwordInput" class="form-label">Contraseña</label>
+    <input
+      type="password"
+      class="form-control"
+      id="passwordInput"
+      placeholder="Ingrese una contraseña segura"
+      [(ngModel)]="password"
+      name="password"
+      [class.is-valid]="password && confirm_password && password === confirm_password"
+      [class.is-invalid]="password && confirm_password && password !== confirm_password"
+    />
+    <small class="form-text text-muted">
+      Contraseña con la que se inicia sesión en la plataforma.
+    </small>
+  </div>
+
+  <!-- Confirmar Contraseña -->
+  <div class="mb-4">
+    <label for="confirmPasswordInput" class="form-label">Confirmar Contraseña</label>
+    <input
+      type="password"
+      class="form-control"
+      id="confirmPasswordInput"
+      placeholder="Repita la contraseña"
+      [(ngModel)]="confirm_password"
+      name="confirm_password"
+      [class.is-valid]="password && confirm_password && password === confirm_password"
+      [class.is-invalid]="password && confirm_password && password !== confirm_password"
+    />
+
+    <!-- Mensajes dinámicos con @if -->
+    @if (!password || !confirm_password) {
+      <small class="form-text text-muted">
+        Asegúrese de que esta contraseña coincida con la anterior.
+      </small>
+    } @else if (password !== confirm_password) {
+      <small class="form-text text-danger">
+        Las contraseñas no coinciden.
+      </small>
+    } @else {
+      <small class="form-text text-success">
+        Las contraseñas coinciden.
+      </small>
+    }
+  </div>
+
+  <!-- Botones -->
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+    <div class="btn-group" role="group" aria-label="Toolbar de acciones">
+      <button
+        type="button"
+        class="btn btn-dark"
+        (click)="saveButton()"
+        [disabled]="!(password && confirm_password && password === confirm_password)"
+      >
+        <i class="fas fa-save"></i> Guardar
+      </button>
+
+      <button type="button" class="btn btn-outline-danger" (click)="cancelButton()">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+    </div>
+  </div>
+</div>

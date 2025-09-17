@@ -1,0 +1,88 @@
+<div class="container">
+  <div class="row">
+    <h1 class="col-12 mb-1">
+      Administración de Mensajes
+    </h1>
+    <small class="col-12 mb-4">
+      Permite la administración de los mensajes que se envían en la plataforma de Comunicación de Grupo KFC
+    </small>
+  </div>
+
+  <div class="row g-3">
+    <!-- Selección + datos base -->
+    <div class="col-12 col-md-4">
+      <!-- Importante: one-way para messages; two-way solo para model -->
+      <app-base-message
+        [item_id_selected]="item_id_selected"
+        (item_idCambiado)="onCambioItemId($event)"
+
+        [model]="message"
+        (modelChange)="onModelChange($event)"
+
+        (tipoCambiado)="onTipoCambiado($event)"
+
+        [messages]="messages">
+      </app-base-message>
+    </div>
+
+    <!-- Edición específica por tipo -->
+    <div class="col-12 col-md-4">
+      @switch (message.type) {
+        @case ('image') {
+          <app-image-message
+            [model]="message"
+            (modelChange)="onModelChange($event)">
+          </app-image-message>
+        }
+        @case ('text') {
+          <app-text-message
+            [model]="message"
+            (modelChange)="onModelChange($event)">
+          </app-text-message>
+        }
+      }
+    </div>
+
+    <!-- Vista previa / zona -->
+    <div class="col-12 col-md-4">
+      <app-zone-screen
+        [model]="message"
+        (modelChange)="onModelChange($event)">
+      </app-zone-screen>
+    </div>
+  </div>
+
+  <!-- Acciones -->
+  <div class="d-flex justify-content-center align-items-center gap-2 mt-4">
+    <div class="btn-group" role="group" aria-label="Toolbar de acciones">
+      <button
+        type="button"
+        class="btn btn-dark"
+        (click)="saveMessage()"
+        [disabled]="loading || saving">
+        <i class="fas fa-save"></i> Guardar
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="cancel()"
+        [disabled]="loading || saving">
+        <i class="fas fa-times"></i> Cancelar
+      </button>
+
+      @if(message.item_id && message.item_id > 0) {
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="delete_message(message)"
+          [disabled]="loading || saving">
+          <i class="fas fa-save"></i> Eliminar
+        </button>
+
+      }
+
+    </div>
+  </div>
+</div>
