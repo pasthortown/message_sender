@@ -15,21 +15,6 @@ services:
       Comuncation_NET:
         ipv4_address: 192.168.97.10
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    restart: always
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - ./rabbitmq_data:/var/lib/rabbitmq
-    env_file:
-      - variables.env
-    networks:
-      Comuncation_NET:
-        ipv4_address: 192.168.97.11
-
   ws:
     build:
       context: ./ws
@@ -48,72 +33,6 @@ services:
       Comuncation_NET:
         ipv4_address: 192.168.97.12
 
-  monitor:
-    build:
-      context: ./monitor
-      dockerfile: monitor.dockerfile
-    container_name: monitor
-    restart: always
-    env_file:
-      - variables.env
-    depends_on:
-      - mongodb
-      - rabbitmq
-    links:
-      - mongodb
-      - rabbitmq
-    networks:
-      Comuncation_NET:
-        ipv4_address: 192.168.97.13
-
-  newman:
-    build:
-      context: ./tests
-      dockerfile: newman.dockerfile
-    container_name: newman
-    depends_on:
-      - ws
-    volumes:
-      - ./tests/tasks:/etc/newman
-      - ./tests/results:/output
-    networks:
-      Comuncation_NET:
-        ipv4_address: 192.168.97.14
-    entrypoint:
-      - newman
-      - run
-      - /etc/newman/ws-postman-tests.json
-      - --reporters
-      - cli,json,html
-      - --reporter-json-export
-      - /output/report.json
-      - --reporter-html-export
-      - /output/report.html
-
-  jmeter:
-    image: justb4/jmeter:5.5
-    volumes:
-      - ./jmeter:/tests
-    working_dir: /tests
-    command: >
-      -n -t test_plan.jmx -l results/results.jtl -j results/jmeter.log
-    networks:
-      Comuncation_NET:
-        ipv4_address: 192.168.97.16
-    depends_on:
-      - ws
-
-  web:
-    image: httpd:2.4
-    container_name: web
-    restart: always
-    ports:
-      - "8585:80"
-    volumes:
-      - ./htdocs:/usr/local/apache2/htdocs:ro
-    networks:
-      Comuncation_NET:
-        ipv4_address: 192.168.97.17
 networks:
   Comuncation_NET:
     driver: bridge
