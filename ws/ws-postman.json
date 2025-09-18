@@ -27,12 +27,8 @@
         ],
         "url": {
           "raw": "{{url_webservice}}/mi_catalogo",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "mi_catalogo"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["mi_catalogo"]
         }
       }
     },
@@ -48,17 +44,10 @@
         ],
         "url": {
           "raw": "{{url_webservice}}/mi_catalogo?id=1",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "mi_catalogo"
-          ],
+          "host": ["{{url_webservice}}"],
+          "path": ["mi_catalogo"],
           "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
+            { "key": "id", "value": "1" }
           ]
         }
       }
@@ -68,14 +57,8 @@
       "request": {
         "method": "POST",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
@@ -83,12 +66,8 @@
         },
         "url": {
           "raw": "{{url_webservice}}/mi_catalogo",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "mi_catalogo"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["mi_catalogo"]
         }
       }
     },
@@ -97,14 +76,8 @@
       "request": {
         "method": "PATCH",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
@@ -112,12 +85,8 @@
         },
         "url": {
           "raw": "{{url_webservice}}/mi_catalogo",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "mi_catalogo"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["mi_catalogo"]
         }
       }
     },
@@ -126,24 +95,14 @@
       "request": {
         "method": "DELETE",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/mi_catalogo?id=1",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "mi_catalogo"
-          ],
+          "host": ["{{url_webservice}}"],
+          "path": ["mi_catalogo"],
           "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
+            { "key": "id", "value": "1" }
           ]
         }
       }
@@ -153,21 +112,12 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/search/usersgroup/correo@ejemplo.com",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "search",
-            "usersgroup",
-            "correo@ejemplo.com"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["search", "usersgroup", "correo@ejemplo.com"]
         }
       }
     },
@@ -176,21 +126,26 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/search/users/correo@ejemplo.com",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "search",
-            "users",
-            "correo@ejemplo.com"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["search", "users", "correo@ejemplo.com"]
+        }
+      }
+    },
+    {
+      "name": "GET Users Count",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/search/userscount",
+          "host": ["{{url_webservice}}"],
+          "path": ["search", "userscount"]
         }
       }
     },
@@ -199,21 +154,12 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/search/messagereport/abc123",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "search",
-            "messagereport",
-            "abc123"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["search", "messagereport", "abc123"]
         }
       }
     },
@@ -222,20 +168,12 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/search/messagesgroup",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "search",
-            "messagesgroup"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["search", "messagesgroup"]
         }
       }
     },
@@ -244,14 +182,8 @@
       "request": {
         "method": "POST",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
@@ -259,13 +191,8 @@
         },
         "url": {
           "raw": "{{url_webservice}}/backoffice/user",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "user"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "user"]
         }
       }
     },
@@ -274,14 +201,8 @@
       "request": {
         "method": "PATCH",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
@@ -289,13 +210,8 @@
         },
         "url": {
           "raw": "{{url_webservice}}/backoffice/user",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "user"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "user"]
         }
       }
     },
@@ -304,25 +220,14 @@
       "request": {
         "method": "DELETE",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/backoffice/user?id=1",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "user"
-          ],
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "user"],
           "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
+            { "key": "id", "value": "1" }
           ]
         }
       }
@@ -332,20 +237,12 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/backoffice/user",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "user"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "user"]
         }
       }
     },
@@ -354,21 +251,12 @@
       "request": {
         "method": "GET",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
         ],
         "url": {
           "raw": "{{url_webservice}}/backoffice/user/admin",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "user",
-            "admin"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "user", "admin"]
         }
       }
     },
@@ -377,14 +265,8 @@
       "request": {
         "method": "POST",
         "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{jwt_token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+          { "key": "Content-Type", "value": "application/json" }
         ],
         "body": {
           "mode": "raw",
@@ -392,13 +274,8 @@
         },
         "url": {
           "raw": "{{url_webservice}}/backoffice/login",
-          "host": [
-            "{{url_webservice}}"
-          ],
-          "path": [
-            "backoffice",
-            "login"
-          ]
+          "host": ["{{url_webservice}}"],
+          "path": ["backoffice", "login"]
         }
       }
     }
