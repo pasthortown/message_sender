@@ -8,6 +8,7 @@ from handlers.user_handler import UserHandler
 from handlers.message_handler import MessageHandler
 from handlers.messagesgroup_handler import MessagesGroupHandler
 from handlers.backoffice_handler import BackofficeUserHandler, BackofficeLoginHandler
+from handlers.user_handler import UsersCountHandler
 
 def make_app():
     return Application([
@@ -15,6 +16,7 @@ def make_app():
         (r"/([^/]+)", CatalogHandler),
         (r"/search/usersgroup/([^/]+)", UserGroupHandler),
         (r"/search/users/([^/]+)", UserHandler),
+        (r"/search/userscount", UsersCountHandler),
         (r"/search/messagereport", MessageHandler),
         (r"/search/messagereport/([^/]+)", MessageHandler),
         (r"/search/messagesgroup/([^/]+)", MessagesGroupHandler),

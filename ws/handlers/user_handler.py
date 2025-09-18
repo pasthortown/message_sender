@@ -11,3 +11,9 @@ class UserHandler(BaseHandler):
         else:
             self.set_status(404)
             self.write({'response': 'Usuario no encontrado', 'status': 404})
+
+class UsersCountHandler(BaseHandler):
+    def get(self):
+        collection = db["users"]
+        count = collection.count_documents({})
+        self.write({'response': {'count': count}, 'status': 200})
