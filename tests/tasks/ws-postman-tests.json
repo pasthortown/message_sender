@@ -1,0 +1,529 @@
+{
+  "info": {
+    "_postman_id": "7a2cf6ab-3b4e-4cc6-84b1-7e6f44a4d123",
+    "name": "WS Catalogos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "jwt_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiYWRtaW4ifQ.j7h-lJGsQ7X5u3H2Uj92BoWVfpYdS2DQvse7Z_DTPDI"
+    },
+    {
+      "key": "url_webservice",
+      "value": "http://ws:5050"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET all items",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/mi_catalogo",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "mi_catalogo"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET item by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/mi_catalogo?id=1",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "mi_catalogo"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST create item",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Ejemplo\",\n  \"descripcion\": \"Item de prueba\"\n}"
+        },
+        "url": {
+          "raw": "{{url_webservice}}/mi_catalogo",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "mi_catalogo"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PATCH update item",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"item_id\": 1,\n  \"nombre\": \"Actualizado\",\n  \"descripcion\": \"Texto actualizado\"\n}"
+        },
+        "url": {
+          "raw": "{{url_webservice}}/mi_catalogo",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "mi_catalogo"
+          ]
+        }
+      }
+    },
+    {
+      "name": "DELETE item",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/mi_catalogo?id=1",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "mi_catalogo"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET User Groups by Email",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/search/usersgroup/correo@ejemplo.com",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "search",
+            "usersgroup",
+            "correo@ejemplo.com"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET User by Email",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/search/users/correo@ejemplo.com",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "search",
+            "users",
+            "correo@ejemplo.com"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET Message Report by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/search/messagereport/abc123",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "search",
+            "messagereport",
+            "abc123"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET Message Groups Today",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/search/messagesgroup",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "search",
+            "messagesgroup"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST Backoffice Crear Usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/user",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "name": "PATCH Backoffice Actualizar Usuario",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"username\": \"admin\",\n  \"password\": \"nuevo123\"\n}"
+        },
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/user",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "name": "DELETE Backoffice Usuario",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/user?id=1",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "user"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET Backoffice Usuarios",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/user",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "user"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET Backoffice Usuario por Username",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          }
+        ],
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/user/admin",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "user",
+            "admin"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST Backoffice Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{jwt_token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "{{url_webservice}}/backoffice/login",
+          "host": [
+            "{{url_webservice}}"
+          ],
+          "path": [
+            "backoffice",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "\ud83e\uddea Backoffice Test Suite",
+      "item": [
+        {
+          "name": "1\ufe0f\u20e3 Crear usuario temporal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"temp_test_user\",\n  \"password\": \"TempPass123\"\n}"
+            },
+            "url": {
+              "raw": "{{url_webservice}}/backoffice/user",
+              "host": [
+                "{{url_webservice}}"
+              ],
+              "path": [
+                "backoffice",
+                "user"
+              ]
+            }
+          }
+        },
+        {
+          "name": "2\ufe0f\u20e3 Login del usuario creado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"temp_test_user\",\n  \"password\": \"TempPass123\"\n}"
+            },
+            "url": {
+              "raw": "{{url_webservice}}/backoffice/login",
+              "host": [
+                "{{url_webservice}}"
+              ],
+              "path": [
+                "backoffice",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "3\ufe0f\u20e3 Actualizar usuario temporal",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 9999,\n  \"username\": \"temp_test_user_updated\",\n  \"password\": \"NewPass456\"\n}"
+            },
+            "url": {
+              "raw": "{{url_webservice}}/backoffice/user",
+              "host": [
+                "{{url_webservice}}"
+              ],
+              "path": [
+                "backoffice",
+                "user"
+              ]
+            }
+          }
+        },
+        {
+          "name": "4\ufe0f\u20e3 Eliminar usuario temporal",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{jwt_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{url_webservice}}/backoffice/user?id=9999",
+              "host": [
+                "{{url_webservice}}"
+              ],
+              "path": [
+                "backoffice",
+                "user"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "9999"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

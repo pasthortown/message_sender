@@ -1,0 +1,241 @@
+<div class="container" cdkDropListGroup>
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <div>
+        @if (currentView === 'month' || currentView === 'week'){
+          <h2 class="calendar-month">{{ viewDate | date : "MMMM" }}<span>{{ viewDate | date : "y" }}</span></h2>
+        }
+        @if (currentView === 'day'){
+          <h2 class="calendar-month">{{ viewDate | date : "d MMMM" }}<span>{{ viewDate | date : "y" }}</span></h2><span class="calendar-dayname">{{ viewDate | date : "EEEE" }}</span>
+        }
+      </div>
+        <c-button-toolbar role="group">
+          @if(show_toolbar) {
+            <c-button-group class="m-auto" role="group">
+              <button  cButton class="btn-sm" [color]="currentView === 'month' ? 'primary' : 'secondary'" title="Mes" (click)="switchToView('month')">Mes</button>
+              <button  cButton class="btn-sm" [color]="currentView === 'week' ? 'primary' : 'secondary'" title="Semana" (click)="switchToView('week')">Semana</button>
+              <button  cButton class="btn-sm" [color]="currentView === 'day' ? 'primary' : 'secondary'" title="Día" (click)="switchToView('day')">Día</button>
+            </c-button-group>
+          }
+        <c-button-group class="m-auto pl-2" role="group">
+          <button  cButton color="primary" class="btn-sm" title="Anterior" (click)="previous()"><i class="fa-solid fa-angle-left"></i></button>
+          <button  cButton color="primary" class="btn-sm" title="Ahora" (click)="viewToday()">Ahora</button>
+          <button  cButton color="primary" class="btn-sm" title="Siguiente" (click)="next()"><i class="fa-solid fa-angle-right"></i></button>
+        </c-button-group>
+      </c-button-toolbar>
+    </div>
+
+    <!-- Month @start -->
+     @if(currentView === 'month') {
+      <table
+        width="100%"
+        cellspacing="0"
+        cellpadding="0"
+        class="calendar-view-month"
+      >
+        <thead>
+          <tr>
+            @for(day of weekDays; track $index) {
+              <th>
+                {{ day }}
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody cdkDropListGroup>
+          @for(week of weeks; track $index) {
+            <tr>
+              @for(date of week; track $index) {
+                <td
+                  cdkDropList
+                  [cdkDropListDisabled]="!dropable"
+                  (cdkDropListDropped)="drop($event, date)"
+                  [cdkDropListData]="appointments"
+                  [class.today]="isToday(date)"
+                  [ngStyle]="{ opacity: isCurrentMonth(date) ? '1' : '0.5' }"
+                >
+                  <div
+                    (click)="selectDate(date)"
+                    (keydown.enter)="selectDate(date)"
+                    (keydown.space)="selectDate(date)"
+                    class="cell-overlay"
+                    tabindex="0"
+                  ></div>
+                  <div class="date">
+                    {{ date.getDate() }}
+                  </div>
+                  <div class="appointments">
+                    @for(appointment of appointments; track $index) {
+                      <ng-container>
+                        @if(isSameDate(appointment.date, date)) {
+                          <div
+                            tabindex="0"
+                            class="appointment"
+                            cdkDrag
+                            cdkDragHandle
+                            [cdkDragDisabled]="!dropable"
+                            [cdkDragData]="appointment"
+                            [ngStyle]="{ 'background-color': appointment.color }"
+                            (click)="onAppointmentClick(appointment, $event)"
+                            [class.app-selected]="isSelected(appointment)"
+                            [title]="getAppointmentHint(appointment)"
+                          >
+                            <!-- Botón de eliminar -->
+                            <button
+                              type="button"
+                              class="app-close"
+                              title="Eliminar"
+                              (click)="onDeleteClick(appointment, $event)"
+                            >
+                              <i class="fa-solid fa-xmark"></i>
+                            </button>
+
+                            <span>{{ appointment.title }}</span>
+                          </div>
+                        }
+                      </ng-container>
+                    }
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+     }
+    <!-- Month @end -->
+
+    <!-- Week View -->
+     @if(currentView === 'week') {
+      <table
+        width="100%"
+        cellspacing="0"
+        cellpadding="0"
+        class="calendar-view-week"
+      >
+        <thead>
+          <tr>
+            <th></th>
+            @for(day of weekDays; track $index) {
+              <th>
+                {{ day }} {{ monthDays[$index].getDate() }}
+              </th>
+            }
+          </tr>
+        </thead>
+        <tbody cdkDropListGroup>
+          @for(timeSlot of timeSlots; track $index) {
+            <tr>
+              <td [width]="10" class="calendar-slot-cell">
+                <span>{{ timeSlot }}</span>
+              </td>
+              @for(day of weekDays; track $index) {
+                <td
+                cdkDropList
+                [cdkDropListDisabled]="!dropable"
+                (cdkDropListDropped)="drop($event, monthDays[$index], timeSlot)"
+                [cdkDropListData]="appointments"
+              >
+                <div
+                  (click)="selectDate(monthDays[$index], timeSlot)"
+                  (keydown.enter)="selectDate(monthDays[$index], timeSlot)"
+                  (keydown.space)="selectDate(monthDays[$index], timeSlot)"
+                  class="cell-overlay"
+                  tabindex="0"
+                ></div>
+                @for(appointment of getAppointmentsForDateTime(monthDays[$index],timeSlot); track $index) {
+                  <div
+                    tabindex="0"
+                    class="appointment"
+                    cdkDrag
+                    cdkDragHandle
+                    [cdkDragDisabled]="!dropable"
+                    [cdkDragData]="appointment"
+                    [ngStyle]="{ 'background-color': appointment.color }"
+                    (click)="onAppointmentClick(appointment, $event)"
+                    [class.app-selected]="isSelected(appointment)"
+                    [title]="getAppointmentHint(appointment)"
+                  >
+                    <!-- Botón de eliminar -->
+                    <button
+                      type="button"
+                      class="app-close"
+                      title="Eliminar"
+                      (click)="onDeleteClick(appointment, $event)"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <span>{{ appointment.title }}</span>
+                  </div>
+                }
+              </td>
+              }
+
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+
+    <!-- Day View -->
+    @if(currentView === 'day') {
+      <table
+        width="100%"
+        cellspacing="0"
+        cellpadding="0"
+        class="calendar-view-day"
+      >
+        <tbody cdkDropListGroup>
+          @for(slot of timeSlots; track $index) {
+            <tr>
+              <td [width]="10" class="calendar-slot-cell">
+                <span>{{ slot }}</span>
+              </td>
+              <td
+                cdkDropList
+                [cdkDropListDisabled]="!dropable"
+                (cdkDropListDropped)="drop($event, viewDate, slot)"
+                [cdkDropListData]="appointments"
+              >
+                <div
+                  (click)="selectDate(viewDate, slot)"
+                  (keydown.enter)="selectDate(viewDate, slot)"
+                  (keydown.space)="selectDate(viewDate, slot)"
+                  class="cell-overlay"
+                  tabindex="0"
+                ></div>
+                @for(appointment of getAppointmentsForDateTime(viewDate,slot); track $index) {
+                  <div
+                    tabindex="0"
+                    class="appointment"
+                    cdkDrag
+                    cdkDragHandle
+                    [cdkDragDisabled]="!dropable"
+                    [cdkDragData]="appointment"
+                    [ngStyle]="{ 'background-color': appointment.color }"
+                    (click)="onAppointmentClick(appointment, $event)"
+                    [class.app-selected]="isSelected(appointment)"
+                    [title]="getAppointmentHint(appointment)"
+                  >
+                    <!-- Botón de eliminar -->
+                    <button
+                      type="button"
+                      class="app-close"
+                      title="Eliminar"
+                      (click)="onDeleteClick(appointment, $event)"
+                    >
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <span>{{ appointment.title }}</span>
+                  </div>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

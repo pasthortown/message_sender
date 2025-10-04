@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-12">
+    <div class="p-4 border rounded shadow-sm bg-white">
+
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">Correo Electrónico</label>
+        <input
+          class="form-control"
+          id="emailInput"
+          aria-describedby="emailInput"
+          placeholder="Correo Electrónico del Usuario"
+          [(ngModel)]="user.email" />
+        <small id="mensajeHelp" class="form-text text-muted">
+          Correo Electrónico del Usuario.
+        </small>
+      </div>
+
+      <div class="mb-3">
+        <label for="userGroups" class="form-label">Grupos a los que pertenece</label>
+
+        <!-- Pasamos el arreglo compatible con <app-groups> -->
+        <app-groups
+          [show_details]="false"
+          [groups]="groupsForChild"
+          [title]="'Grupos del Usuario'"
+          (deleteGroups)="onDeleteGroups($event)">
+        </app-groups>
+
+        <small id="mensajeHelp" class="form-text text-muted">
+          Grupos a los que pertenece el Usuario.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>

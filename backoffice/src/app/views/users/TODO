@@ -1,0 +1,9 @@
+Lista en forma de tabla de todos los usuarios con Nombre usuario, Correo, Opciones (Se permite editar, borrar)
+Al editar se abre una ventana con:
+ - Nombre usuario
+ - Correo electrónico
+ - Contraseña *******
+ Guardar y Cancelar
+
+Una vez guardado se agrega a la lista.
+Eliminar muestra un mensaje validando si se desea eliminar usando SWAL2

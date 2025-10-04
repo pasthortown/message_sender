@@ -1,0 +1,25 @@
+<div class="mb-3">
+  <label for="messagePosition" class="form-label">Posición en la Pantalla</label>
+  <div class="row justify-content-center">
+    <div class="col-12 d-flex justify-content-center">
+      <table class="table text-center custom-table w-100">
+        <tbody>
+          @for (fila of matriz; track fila) {
+            <tr>
+              @for (celda of fila; track celda) {
+                <td class="custom-cell"
+                    [class.hovered]="hovered === celda"
+                    [class.selected]="seleccion === celda"
+                    (mouseenter)="hovered = celda"
+                    (mouseleave)="hovered = null"
+                    (click)="seleccionar(celda)">
+                  {{ celda }}
+                </td>
+              }
+            </tr>
+          }
+      </tbody>
+    </table>
+  </div>
+  <small class="form-text text-muted">Establece la zona de la pantalla donde mostraremos el mensaje.</small>
+</div>

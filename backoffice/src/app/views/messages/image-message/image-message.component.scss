@@ -1,0 +1,20 @@
+.drag-drop-zone {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  color: #999;
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.drag-drop-zone:hover {
+  background-color: #f8f9fa;
+}
+
+.img-preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+}

@@ -1,0 +1,51 @@
+.panel-usuarios {
+  height: 550px;
+  overflow-y: auto; /* Opcional: para que el contenido interno haga scroll si se desborda */
+  display: flex;
+  flex-direction: column;
+}
+
+.table-wrapper {
+  max-height: 100%;
+}
+
+/* Estilo tabla general */
+.custom-table {
+  border: 3px solid gray;
+  border-radius: 5px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: white;
+}
+
+/* Encabezado fijo */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+/* Encabezados */
+.custom-header {
+  color: white;
+  font-weight: bold;
+  background-color: #4b4b4b;
+  border-bottom: 1px solid lightgray;
+  padding: 12px;
+  font-size: 16px;
+}
+
+/* Celdas */
+.custom-cell {
+  border-bottom: 1px solid lightgray;
+  color: gray;
+  padding: 12px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Hover sobre fila completa */
+.custom-row:hover .custom-cell {
+  background-color: gray;
+  color: white;
+}

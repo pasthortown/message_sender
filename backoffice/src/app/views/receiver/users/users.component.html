@@ -1,0 +1,87 @@
+<div class="p-4 border rounded shadow-sm bg-white panel-usuarios d-flex flex-column">
+  <h4 class="mb-3">{{title}}</h4>
+
+  <!-- Toolbar -->
+  <div class="d-flex align-items-center gap-2 mb-3 toolbar">
+    @if(can_delete) {
+      <button
+        type="button"
+        class="btn btn-danger d-flex align-items-center"
+        aria-label="Eliminar usuarios seleccionados del grupo"
+        title="Eliminar usuarios seleccionados del grupo"
+        (click)="emitDeleteSelected()">
+        <i class="fa-solid fa-trash me-1"></i>
+      </button>
+    } @else {
+      <button
+        type="button"
+        class="btn btn-success d-flex align-items-center"
+        aria-label="Agregar usuarios seleccionados a un grupo"
+        title="Agregar usuarios seleccionados a un grupo"
+        (click)="emitAddSelectedToGroup()">
+        <i class="fa-solid fa-list-ul me-1"></i>
+      </button>
+    }
+
+    <!-- Buscador -->
+    <div class="input-group ms-2 toolbar-search">
+      <input
+        #q
+        type="text"
+        class="form-control"
+        placeholder="Buscar..."
+        aria-label="Buscar"
+        (input)="filterUsers(q.value)" />
+      <button
+        class="btn btn-outline-secondary"
+        type="button"
+        aria-label="Buscar"
+        (click)="filterUsers(q.value)">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla (scroll solo aquí) -->
+  <div class="table-wrapper flex-grow-1 overflow-auto">
+    <table class="table custom-table w-100 m-0 align-middle">
+      <tbody>
+        @for (user of users_visible; track user.id) {
+          <tr class="custom-row" [class.selected-row]="user.select">
+            <!-- checkbox -->
+            <td class="check-cell">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                [checked]="user.select"
+                (change)="onToggleSelect(user)" />
+            </td>
+
+            <!-- ojo -->
+            @if(show_details) {
+              <td class="icon-cell">
+                <a
+                  role="button"
+                  class="eye-link text-decoration-none"
+                  title="Ver Detalles"
+                  aria-label="Ver Detalles"
+                  (click)="inspectUser(user)">
+                  <i class="fa-regular fa-eye"></i>
+                </a>
+              </td>
+            }
+
+            <!-- email -->
+            <td class="custom-cell">
+              @if (user.sin_grupo) {
+                <span class="user-email user--sin-grupo">{{ user.email }}</span>
+              } @else {
+                <span class="user-email">{{ user.email }}</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

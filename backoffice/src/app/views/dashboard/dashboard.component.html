@@ -1,0 +1,46 @@
+<c-card class="my-4">
+  <c-card-body>
+    <c-row>
+      <c-col sm="12">
+        <h4 class="card-title mb-0" id="traffic">Recepción de Mensajes</h4>
+        <div class="small text-body-secondary">{{ subtitle }}</div>
+      </c-col>
+    </c-row>
+
+    <c-chart
+      [data]="mainChart.data"
+      [height]="300"
+      [ngStyle]="{ 'marginTop.px': 40 }"
+      [options]="mainChart.options"
+      [type]="mainChart.type"
+      (chartRef)="handleChartRef($event)"
+    >
+      Main chart
+    </c-chart>
+  </c-card-body>
+
+  <c-card-footer>
+    <c-row class="text-center mb-2" [xl]="4" [lg]="4" [sm]="2" [xs]="1" [gutter]="4">
+      <c-col>
+        <div class="text-body-secondary">Leído</div>
+        <strong>{{ totals.leido }} ({{ percents.leido }}%)</strong>
+        <c-progress class="mt-2" thin color="success" [value]="percents.leido" aria-label="Leído" />
+      </c-col>
+      <c-col>
+        <div class="text-body-secondary">Activo</div>
+        <div class="fw-semibold text-truncate">{{ totals.activo }} ({{ percents.activo }}%)</div>
+        <c-progress class="mt-2" thin color="info" [value]="percents.activo" aria-label="Activo" />
+      </c-col>
+      <c-col>
+        <div class="text-body-secondary">Inactivo</div>
+        <div class="fw-semibold text-truncate">{{ totals.inactivo }} ({{ percents.inactivo }}%)</div>
+        <c-progress class="mt-2" thin color="warning" [value]="percents.inactivo" aria-label="Inactivo" />
+      </c-col>
+      <c-col class="d-none d-xl-block">
+        <div class="text-body-secondary">Accedido</div>
+        <div class="fw-semibold text-truncate">{{ totals.accedido }} ({{ percents.accedido }}%)</div>
+        <c-progress class="mt-2" thin color="danger" [value]="percents.accedido" aria-label="Accedido" />
+      </c-col>
+    </c-row>
+  </c-card-footer>
+</c-card>

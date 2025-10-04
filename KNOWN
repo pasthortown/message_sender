@@ -1,0 +1,5 @@
+los users llevan el email de la cuenta del usuario de windows donde corre el aplicativo ejemplo luis.salazar
+un usuario debe estar en un grupo para mostrar los mensajes estos se guardan en usersgroup {email:, group:} se puede obtener los grupos con Users Group By email
+los mensajes se guardan en messages
+los registros de actividad del usuario ante cada mensaje se guardan en messagereport
+cada mensaje se puede programar una o mas agendas por grupo y se almacenan estos datos de messagesgroup {message_id:, schedule:, group:} devolviendo los mensajes del dia de hoy con GET Message Groups Today

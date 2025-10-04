@@ -1,0 +1,21 @@
+<!-- Ancho -->
+<div class="mb-3">
+  <label for="anchoInput" class="form-label">Ancho</label>
+  <input type="number" class="form-control" id="anchoInput" step="1" [(ngModel)]="model.width" (input)="emitirAncho($event)">
+  <small class="form-text text-muted">Establece el ancho en píxeles que ocupará el mensaje.</small>
+</div>
+
+<!-- Zona de Drag and Drop -->
+<div class="drag-drop-zone"
+     (click)="fileInput.click()"
+     (dragover)="onDragOver($event)"
+     (dragleave)="onDragLeave($event)"
+     (drop)="onDrop($event)">
+  @if (!imagenCargada) {
+    <p>Arrastra una imagen aquí o haz clic para seleccionarla</p>
+  } @else {
+    <img [src]="imagenCargada" alt="Vista previa" class="img-preview" />
+  }
+  <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden #fileInput>
+</div>
+<small class="form-text text-muted">Establece la imagen que se enviará en el mensaje.</small>

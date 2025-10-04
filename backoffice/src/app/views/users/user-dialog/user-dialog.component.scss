@@ -1,0 +1,6 @@
+.panel-usuarios {
+  height: 550px;
+  overflow-y: auto; /* Opcional: para que el contenido interno haga scroll si se desborda */
+  display: flex;
+  flex-direction: column;
+}

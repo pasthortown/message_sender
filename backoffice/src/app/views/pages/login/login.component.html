@@ -1,0 +1,50 @@
+<div class="d-flex flex-wrap min-vh-100">
+
+  <!-- IZQUIERDA: Logo + Descripción -->
+  <div class="d-none d-md-flex flex-column justify-content-center align-items-center p-5 col-md-5" style="background-color: #F8F9FA; min-height: 100vh;">
+    <div class="mb-4">
+      <img src="assets/images/logo_grupo_kfc.png" alt="Logo Grupo KFC" style="width: 200px;" />
+    </div>
+    <h5 class="text-center text-dark">Sistema de Comunicación Interna</h5>
+    <p class="mt-3 text-secondary" style="text-align: justify; max-width: 400px;">
+      Plataforma diseñada para administrar y centralizar el envío de notificaciones internas, mejorando la comunicación con los colaboradores de manera clara, oportuna y eficiente.
+    </p>
+  </div>
+
+  <!-- DERECHA: Login -->
+  <div class="d-flex justify-content-center align-items-center col-12 col-md-7" style="
+        background: linear-gradient(160deg, #1c1c1cca 0%, #2c2c2c 100%);
+        min-height: 100vh;
+      ">
+    <c-card class="p-5 text-white" style="width: 380px; border-radius: 20px; background-color: rgba(0,0,0,0.6); box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+      <c-card-body class="text-center">
+
+        <!-- Avatar -->
+        <div class="mb-4">
+          <img src="assets/images/logo.png" alt="Avatar" style="width: auto; height: 80px; border-radius: 50%;" />
+        </div>
+
+        <!-- Login Form -->
+        <c-input-group class="mb-3">
+          <span cInputGroupText class="bg-dark border-0 text-white">
+            <svg cIcon name="cil-envelope-closed"></svg>
+          </span>
+          <input type="text" cFormControl placeholder="Nombre de Usuario" class="bg-dark text-white border-0" [(ngModel)]="username"/>
+        </c-input-group>
+
+        <c-input-group class="mb-3">
+          <span cInputGroupText class="bg-dark border-0 text-white">
+            <svg cIcon name="cil-lock-locked"></svg>
+          </span>
+          <input type="password" cFormControl placeholder="Contraseña" class="bg-dark text-white border-0" [(ngModel)]="password"
+          (keyup.enter)="login()"/>
+        </c-input-group>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <button cButton style="background-color: #D71920; border: none;" class="w-100 text-white" (click)="login()">Acceder</button>
+        </div>
+
+      </c-card-body>
+    </c-card>
+  </div>
+</div>

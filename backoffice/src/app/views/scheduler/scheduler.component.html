@@ -1,0 +1,26 @@
+<div class="container">
+  <!-- Título -->
+  <div class="row">
+    <h1 class="col-12 mb-4">
+      Agenda de Mensajes
+    </h1>
+    <small class="col-12 mb-4">Permite la gestión de los mensajes que se remiten con la aplicación Comunicación de Grupo KFC</small>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="p-4 border rounded shadow-sm bg-white">
+        <app-new-event [messages]="messages" [groupsOptions]="groups" (createEvent)="onCreateEvent($event)"></app-new-event>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="p-4 border rounded shadow-sm bg-white">
+        <h3 class="mb-4">Mensajes Programados</h3>
+        <app-schedule [messages]="messages" [appointments]="agenda" [editable]="false" [dropable]="false" (select_date)="selected_date($event)" (delete_appointment)="delete_appointment($event)"></app-schedule>
+      </div>
+    </div>
+  </div>
+</div>
