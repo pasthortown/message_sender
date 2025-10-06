@@ -1,7 +1,8 @@
+from datetime import datetime
 from tornado.ioloop import IOLoop
-from tornado.web import Application
+from tornado.web import Application, RequestHandler
 
-from base import BaseHandler
+from base import BaseHandler  # lo dejas para otras rutas si lo necesitas
 from handlers.catalog_handler import CatalogHandler
 from handlers.usergroup_handler import UserGroupHandler
 from handlers.user_handler import UserHandler
@@ -10,9 +11,19 @@ from handlers.messagesgroup_handler import MessagesGroupHandler
 from handlers.backoffice_handler import BackofficeUserHandler, BackofficeLoginHandler
 from handlers.user_handler import UsersCountHandler
 
+class PublicRootHandler(RequestHandler):
+    def get(self):
+        self.set_header("Content-Type", "application/json; charset=utf-8")
+        self.write({
+            "ok": True,
+            "service": "WS Comuniación Funcionando",
+            "message": "Endpoint público",
+            "time_utc": datetime.utcnow().isoformat() + "Z"
+        })
+
 def make_app():
     return Application([
-        (r"/", BaseHandler),
+        (r"/", PublicRootHandler),
         (r"/([^/]+)", CatalogHandler),
         (r"/search/usersgroup/([^/]+)", UserGroupHandler),
         (r"/search/users/([^/]+)", UserHandler),
