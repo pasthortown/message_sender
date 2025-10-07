@@ -29,6 +29,8 @@ namespace ImageActivityMonitor.UI
         private ContextMenuStrip contextMenu;
         private ToolStripMenuItem mensajesMenuItem;
         private ToolStripMenuItem salirMenuItem;
+        private ActivityReporter activityReporter;
+        private string currentUserEmail = "";
 
         public MainForm()
         {
@@ -149,8 +151,15 @@ namespace ImageActivityMonitor.UI
 
                     // Marcar como mostrado en SQLite antes o después; aquí lo hacemos antes para evitar duplicados si falla el cierre
                     Database.MarkAgendaAsShowed(messageId, schedule);
-
                     string estado = await messageDisplayService.MostrarMensajeAsync(parsed);
+                    // Reporte al WS:
+                    _ = activityReporter.ReportAsync(
+                            messageId,
+                            currentUserEmail,
+                            parsed.Zone,
+                            estado,
+                            DateTime.UtcNow
+                        );
                     Console.WriteLine($"[Mostrar por menú {type}] Zona {parsed.Zone}, Estado: {estado}");
                 });
 
@@ -175,6 +184,9 @@ namespace ImageActivityMonitor.UI
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
 
+            currentUserEmail = new UserDataGetter(client, urlBase).GetWindowsUsername();
+            activityReporter = new ActivityReporter(client, urlBase);
+
             await SincronizarTodoAsync(client, urlBase);
 
             refreshTimer = new System.Timers.Timer(refreshSeconds * 1000);
@@ -187,12 +199,10 @@ namespace ImageActivityMonitor.UI
             var guiWrapper = new GuiWrapper();
             var imageLoader = new ImageLoader();
             var monitorService = new UserMonitorService(guiWrapper);
-            var logger = new ActivityLogger();
-
             var services = new List<BaseMessageDisplayService>
             {
-                new ImageMessageDisplayService(imageLoader, guiWrapper, monitorService, logger),
-                new TextMessageDisplayService(guiWrapper, monitorService, logger)
+                new ImageMessageDisplayService(imageLoader, guiWrapper, monitorService),
+                new TextMessageDisplayService(guiWrapper, monitorService)
             };
 
             messageDisplayService = new MessageDisplayService(services);
@@ -289,6 +299,14 @@ namespace ImageActivityMonitor.UI
                             {
                                 Database.MarkAgendaAsShowed(item.messageId, item.schedule);
                                 string estado = await service.MostrarMensajeAsync(message);
+                                // Reporte al WS:
+                                _ = activityReporter.ReportAsync(
+                                        item.messageId,
+                                        currentUserEmail,
+                                        message.Zone,
+                                        estado,
+                                        DateTime.UtcNow
+                                    );
                                 Console.WriteLine($"[Mostrado {type}] Zona {message.Zone}, Estado: {estado}");
                             }
                             else

@@ -13,20 +13,17 @@ namespace ImageActivityMonitor.Infrastructure.Services
         private readonly ImageLoader _imageLoader;
         private readonly GuiWrapper _guiWrapper;
         private readonly UserMonitorService _monitorService;
-        private readonly ActivityLogger _logger;
 
         public string TypeHandled => "image";
 
         public ImageMessageDisplayService(
             ImageLoader imageLoader,
             GuiWrapper guiWrapper,
-            UserMonitorService monitorService,
-            ActivityLogger logger)
+            UserMonitorService monitorService)
         {
             _imageLoader = imageLoader;
             _guiWrapper = guiWrapper;
             _monitorService = monitorService;
-            _logger = logger;
         }
 
         public async Task<string> MostrarMensajeAsync(MessageBase mensajeBase)
@@ -157,7 +154,6 @@ namespace ImageActivityMonitor.Infrastructure.Services
             else if (leido)    estado = "Leído";
             else if (fueActivo)estado = "Activo";
 
-            _logger.Log(mensaje.Zone, estado);
             return estado;
         }
 
