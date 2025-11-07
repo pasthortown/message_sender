@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
   <Package
     Name="Comunicaciones Grupo KFC"
     Language="12298"
@@ -9,10 +10,13 @@
     Scope="perUser"
     Compressed="yes">
 
-    <!-- Upgrades -->
+    <!-- Empaqueta todos los archivos dentro del MSI -->
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Control de versiones -->
     <MajorUpgrade DowngradeErrorMessage="Ya existe una versión más reciente instalada." />
 
-    <!-- Icono incrustado + ARP -->
+    <!-- Icono incrustado -->
     <Icon Id="MainIco" SourceFile="Resources\main.ico" />
     <Property Id="ARPPRODUCTICON" Value="MainIco" />
 
@@ -36,13 +40,12 @@
       <ComponentRef Id="Cmp_MainExe" />
       <ComponentRef Id="Cmp_EnvFile" />
       <ComponentRef Id="Cmp_Res_Ico" />
-      <ComponentRef Id="Cmp_Res_News" /> <!-- NUEVO -->
+      <ComponentRef Id="Cmp_Res_News" />
       <ComponentRef Id="Cmp_StartMenuShortcut" />
       <ComponentRef Id="Cmp_AutoRun" />
-      <!-- <ComponentRef Id="Cmp_DesktopShortcut" /> -->
     </Feature>
 
-    <!-- Archivos publicados (usa -d PublishDir="...\publish" en wix build) -->
+    <!-- Archivos publicados -->
     <Component Id="Cmp_MainExe" Directory="INSTALLDIR" Guid="*">
       <File Id="Fil_MainExe" Source="$(var.PublishDir)\GrupoKFC_Communications.exe" KeyPath="yes" />
     </Component>
@@ -51,17 +54,15 @@
       <File Id="Fil_DotEnv" Source="$(var.PublishDir)\.env" />
     </Component>
 
-    <!-- Resources\main.ico (para runtime) -->
     <Component Id="Cmp_Res_Ico" Directory="RESDIR" Guid="*">
       <File Id="Fil_Res_MainIco" Source="Resources\main.ico" KeyPath="yes" />
     </Component>
 
-    <!-- Resources\news.png (para runtime) -->
     <Component Id="Cmp_Res_News" Directory="RESDIR" Guid="*">
       <File Id="Fil_Res_NewsPng" Source="Resources\news.png" KeyPath="yes" />
     </Component>
 
-    <!-- Acceso directo en Menú Inicio (con icono) -->
+    <!-- Acceso directo en Menú Inicio -->
     <Component Id="Cmp_StartMenuShortcut" Directory="AppProgramMenuDir" Guid="*">
       <Shortcut
         Id="Shc_StartMenu"
@@ -89,19 +90,6 @@
         Value="&quot;[INSTALLDIR]GrupoKFC_Communications.exe&quot;"
         KeyPath="yes" />
     </Component>
-
-    <!-- (Opcional) Acceso directo en Escritorio
-    <Component Id="Cmp_DesktopShortcut" Directory="DesktopFolder" Guid="*">
-      <Shortcut
-        Id="Shc_Desktop"
-        Name="Comunicaciones Grupo KFC"
-        Target="[INSTALLDIR]GrupoKFC_Communications.exe"
-        WorkingDirectory="INSTALLDIR"
-        Icon="MainIco" />
-      <RegistryValue Root="HKCU" Key="Software\Grupo KFC\Comunicaciones Grupo KFC"
-                     Name="desktopShortcut" Type="integer" Value="1" KeyPath="yes" />
-    </Component>
-    -->
 
   </Package>
 </Wix>

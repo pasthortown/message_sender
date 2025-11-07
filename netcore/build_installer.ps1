@@ -2,15 +2,15 @@
   build_installer.ps1
   - Publica la app WinForms como self-contained (WinExe, single file)
   - Copia .env a la carpeta de publish
-  - Compila el MSI con WiX v4
-  - Valida artefactos (exe, .env, ico)
+  - Compila el MSI con WiX v4 (CAB embebido + sin .wixpdb)
+  - Valida artefactos (exe, .env, ico) y que solo quede un MSI
 #>
 
 $ErrorActionPreference = "Stop"
 
 # --- Config ---
-$ProjectRoot   = Split-Path -Parent $PSScriptRoot       # ...\Comunication
-$AppDir        = $PSScriptRoot                          # ...\Comunication\netcore
+$ProjectRoot   = Split-Path -Parent $PSScriptRoot
+$AppDir        = $PSScriptRoot
 $InstallerDir  = Join-Path $AppDir "installer"
 $ResourcesDir  = Join-Path $AppDir "Resources"
 $DistDir       = Join-Path $AppDir "dist"
@@ -20,17 +20,18 @@ $WxsFile       = Join-Path $InstallerDir "Product.wxs"
 $MsiOut        = Join-Path $DistDir "ComunicacionesGrupoKFC.msi"
 $EnvSource     = Join-Path $AppDir ".env"
 $EnvTarget     = Join-Path $PublishDir ".env"
-$IcoRuntime    = Join-Path $ResourcesDir "main.ico"     # usado por la app en runtime (Resources\main.ico)
-$IcoWixRef     = $IcoRuntime                            # Product.wxs lo referencia como ..\Resources\main.ico o Resources\main.ico según tu última versión
+$IcoRuntime    = Join-Path $ResourcesDir "main.ico"
 
 Write-Host "=== Build Installer (Comunicaciones Grupo KFC) ===" -ForegroundColor Cyan
 
 # --- Prechequeos ---
-if (-not (Test-Path $WxsFile)) {
-  throw "No se encontró el WXS: $WxsFile"
-}
-if (-not (Test-Path $IcoRuntime)) {
-  throw "No se encontró el ícono en runtime: $IcoRuntime"
+if (-not (Test-Path $WxsFile)) { throw "No se encontró el WXS: $WxsFile" }
+if (-not (Test-Path $IcoRuntime)) { throw "No se encontró el ícono en runtime: $IcoRuntime" }
+
+# Verifica MediaTemplate EmbedCab="yes"
+$wxsText = Get-Content -Path $WxsFile -Raw
+if ($wxsText -notmatch '<\s*MediaTemplate\b[^>]*EmbedCab\s*=\s*"(?:true|yes)"') {
+  Write-Warning 'Tu Product.wxs no contiene <MediaTemplate EmbedCab="yes" /> dentro de <Package>. Agrega esa línea para un MSI "todo en uno".'
 }
 
 # --- Publish ---
@@ -60,16 +61,20 @@ if (-not (Get-Command wix -ErrorAction SilentlyContinue)) {
   throw "No está instalado WiX v4 como dotnet tool. Instálalo con: dotnet tool install --global wix"
 }
 
-Write-Host "==> Compilando MSI con WiX..." -ForegroundColor Yellow
+Write-Host "==> Compilando MSI con WiX (CAB embebido, sin .wixpdb)..." -ForegroundColor Yellow
 New-Item -ItemType Directory -Force -Path $DistDir | Out-Null
 
-# Nota: rutas relativas en WXS:
-# - Si tu Product.wxs usa 'SourceFile="..\Resources\main.ico"', compila estando en $AppDir para que la ruta sea válida.
+# Limpia artefactos previos (usar -Include requiere comodín en -Path)
+Get-ChildItem -Path (Join-Path $DistDir '*') -Include *.msi,*.wixpdb,*.cab -File -ErrorAction SilentlyContinue | Remove-Item -Force
+
+# Compilar desde $AppDir para que las rutas relativas del WXS funcionen
 Push-Location $AppDir
 try {
-  wix build -arch x64 `
+  wix build `
+    -arch x64 `
     -o $MsiOut `
     -d PublishDir="$PublishDir" `
+    -pdbtype none `
     $WxsFile
 }
 finally {
@@ -81,8 +86,11 @@ if (-not (Test-Path $MsiOut)) {
   throw "No se generó el MSI en $MsiOut"
 }
 
+# Por si acaso, elimina wixpdb/cab si el build los dejara en dist (no debería)
+Get-ChildItem -Path (Join-Path $DistDir '*') -Include *.wixpdb,*.cab -File -ErrorAction SilentlyContinue | Remove-Item -Force
+
 Write-Host "`n=== LISTO ===" -ForegroundColor Green
-Write-Host "MSI: $MsiOut"
-Write-Host "Publish: $PublishDir"
-Write-Host "Exe: $(Join-Path $PublishDir $ExeName)"
-Write-Host "ENV: $EnvTarget"
+Write-Host "MSI único: $MsiOut"
+Write-Host "Publish:   $PublishDir"
+Write-Host "Exe:       $(Join-Path $PublishDir $ExeName)"
+Write-Host "ENV:       $EnvTarget"
